@@ -10,12 +10,23 @@ def fetch_banjir_tweets():
     os.makedirs("data/raw", exist_ok=True)
 
     headers = {"Authorization": f"Bearer {BEARER_TOKEN}"}
-    url = "https://api.x.com/2/tweets/search/recent?query=banjir&max_results=10"
 
-    response = requests.get(url, headers=headers).json()
+    url = "https://api.twitter.com/2/tweets/search/recent"
+
+    query = 'banjir OR kebanjiran OR "hujan deras" OR "sungai meluap" OR genangan'
+
+    params = {
+        "query": query,
+        "max_results": 10,
+        "tweet.fields": "created_at,lang"
+    }
+
+    response = requests.get(url, headers=headers, params=params).json()
+
+    print("API Response:", response)
 
     if "data" not in response:
-        print("Tidak ada data:", response)
+        print(" Tidak ada data ditemukan.")
         return
 
     file_path = os.path.join("data", "raw", "tweets_banjir.csv")
@@ -28,5 +39,4 @@ def fetch_banjir_tweets():
 
     print("✔ Data disimpan ke", file_path)
 
-# <<< INI YANG NGGAK ADA !!!
 fetch_banjir_tweets()
