@@ -7,68 +7,56 @@ import joblib
 import os
 
 # ================================
-# 1. Load dataset yang sudah dipreprocessing
+# 1. Load dataset
 # ================================
-DATA_PATH = os.path.join("data", "processed", "train_clean.csv")
+DATA_PATH = r"D:\MITIGASI BENCANA\Mitigasi_Bencana\data\processed\train_clean.csv"
 
 print("[INFO] Loading dataset...")
 df = pd.read_csv(DATA_PATH)
 
-# Pastikan kolom sesuai
-TEXT_COL = "clean_text"
-LABEL_COL = "label"
+# ================================
+# 2. Kolom yang digunakan
+# ================================
+TEXT_COL = "clean_text"      # teks input
+LABEL_COL = "target"         # label (0/1 di dataset kamu)
 
 X = df[TEXT_COL]
 y = df[LABEL_COL]
 
 # ================================
-# 2. Split train & valid
+# 3. Split training / validation
 # ================================
-print("[INFO] Splitting dataset...")
-X_train, X_valid, y_train, y_valid = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
+X_train, X_val, y_train, y_val = train_test_split(
+    X, y, test_size=0.2, random_state=42
 )
 
 # ================================
-# 3. TF-IDF Vectorization
+# 4. TF-IDF Vectorizer
 # ================================
-print("[INFO] Vectorizing text...")
-vectorizer = TfidfVectorizer(
-    max_features=5000,
-    ngram_range=(1, 2)
-)
-
+vectorizer = TfidfVectorizer(max_features=5000)
 X_train_vec = vectorizer.fit_transform(X_train)
-X_valid_vec = vectorizer.transform(X_valid)
+X_val_vec = vectorizer.transform(X_val)
 
 # ================================
-# 4. Train Logistic Regression
+# 5. Train Logistic Regression
 # ================================
-print("[INFO] Training Logistic Regression model...")
-model = LogisticRegression(max_iter=300)
+model = LogisticRegression(max_iter=200)
 model.fit(X_train_vec, y_train)
 
 # ================================
-# 5. Evaluation
+# 6. Evaluation
 # ================================
-print("[INFO] Evaluating model...")
-y_pred = model.predict(X_valid_vec)
-
-print("\nAccuracy:", accuracy_score(y_valid, y_pred))
-print("\nClassification Report:")
-print(classification_report(y_valid, y_pred))
+y_pred = model.predict(X_val_vec)
+print("[INFO] Accuracy:", accuracy_score(y_val, y_pred))
+print(classification_report(y_val, y_pred))
 
 # ================================
-# 6. Save model & vectorizer
+# 7. Save model dan vectorizer
 # ================================
-MODEL_DIR = "models"
+MODEL_DIR = r"D:\MITIGASI BENCANA\Mitigasi_Bencana\models"
 os.makedirs(MODEL_DIR, exist_ok=True)
 
-MODEL_PATH = os.path.join(MODEL_DIR, "model.pkl")
-VECTORIZER_PATH = os.path.join(MODEL_DIR, "vectorizer.pkl")
+joblib.dump(model, os.path.join(MODEL_DIR, "logreg_model.pkl"))
+joblib.dump(vectorizer, os.path.join(MODEL_DIR, "tfidf_vectorizer.pkl"))
 
-joblib.dump(model, MODEL_PATH)
-joblib.dump(vectorizer, VECTORIZER_PATH)
-
-print(f"\n[✔] Model saved to: {MODEL_PATH}")
-print(f"[✔] Vectorizer saved to: {VECTORIZER_PATH}")
+print("[INFO] Model saved in folder 'models/'")
