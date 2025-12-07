@@ -37,9 +37,9 @@ def run_preprocessing():
     # Tentukan base directory → folder project utama
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     
-    input_path = os.path.join(BASE_DIR, "data/kaggle/train.csv")
+    input_path = os.path.join(BASE_DIR, "D:/yul/mitigasi/Mitigasi_Bencana/data/raw/tweets_banjir.csv")
     output_dir = os.path.join(BASE_DIR, "data/processed")
-    output_path = os.path.join(output_dir, "train_clean.csv")
+    output_path = os.path.join(output_dir, "D:/yul/mitigasi/Mitigasi_Bencana/data/processed/tweets_processed.py")
 
     # Buat folder processed jika belum ada
     os.makedirs(output_dir, exist_ok=True)
