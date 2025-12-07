@@ -17,7 +17,7 @@ def fetch_banjir_tweets():
 
     params = {
         "query": query,
-        "max_results": 10,
+        "max_results": 20,
         "tweet.fields": "created_at,lang"
     }
 
