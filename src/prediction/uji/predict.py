@@ -6,7 +6,7 @@ tfidf = load("D:/yul/mitigasi/Mitigasi_Bencana/models/tfidf_vectorizer.pkl")
 model = load("D:/yul/mitigasi/Mitigasi_Bencana/models/logreg_model.pkl")
 
 # ===== 2. Load tweet yang sudah dipreprocessing =====
-df = pd.read_csv("D:/yul/mitigasi/Mitigasi_Bencana/data/processed/tweets_processed.csv")
+df = pd.read_csv("D:/yul/mitigasi/Mitigasi_Bencana/data/processed/tweets_processed_1.csv")
 
 # Pastikan kolomnya ada
 if "clean_text" not in df.columns:
