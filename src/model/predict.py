@@ -30,3 +30,4 @@ df.to_csv(output_path, index=False)
 print("✔ Prediksi selesai, disimpan ke:", output_path)
 print("=== Hasil Prediksi Tweet Real-Time ===")
 print(df[["text", "clean_text", "prediction"]].head())
+
