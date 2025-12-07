@@ -9,7 +9,7 @@ import os
 # ================================
 # 1. Load dataset
 # ================================
-DATA_PATH = r"D:\MITIGASI BENCANA\Mitigasi_Bencana\data\processed\train_clean.csv"
+DATA_PATH = r"D:\BENCANA NIH\Mitigasi_Bencana\data\processed\train_clean.csv"
 
 print("[INFO] Loading dataset...")
 df = pd.read_csv(DATA_PATH)
